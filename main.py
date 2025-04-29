@@ -22,6 +22,10 @@ HEIGHT = 900
 WHITE = (255,255,255)
 current_mouse_pos = (0,0)
 
+debug_flag = False
+
+
+
 
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 surface = np.zeros((*screen.get_size(), 3), np.int32)
@@ -32,15 +36,28 @@ directions = ((1,0), (1,-1),(0,-1),(-1,-1),(-1,0),(-1,1),(0,1),(1,1))
 def step():
     surface[ current_mouse_pos[0], current_mouse_pos[1] ] = WHITE
 
+    # manipulate the surface
+    # in the following way
+    #
+    # new array containing neighbor count
+    # calculated by each point added to all 8 directions in the new array
+
+    occupied = surface[  surface == WHITE  ]
+    if debug_flag:
+        pass
+
+    # mask = (surface != WHITE) & (neighbors == 2)
+
     surfarray.blit_array(screen, surface)
     pass
 
 
 def main():
-    global current_mouse_pos
+    global current_mouse_pos, debug_flag
 
     running = True
     paused = False
+
 
     fps = 60
     surfarray.blit_array(screen, surface)
@@ -52,6 +69,8 @@ def main():
             if event.type == pg.KEYUP:
                 if event.key == pg.K_SPACE:
                     paused = not paused
+                if event.key == pg.K_d:
+                    debug_flag = not debug_flag
 
         current_mouse_pos = pg.mouse.get_pos()
         if not paused:
