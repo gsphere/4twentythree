@@ -48,6 +48,7 @@ def step():
 
     # mask = (surface != WHITE) & (neighbors == 2)
 
+    surface[:] = np.resize(surface[1:], (WIDTH, HEIGHT, 3))
     surfarray.blit_array(screen, surface)
     pass
 
